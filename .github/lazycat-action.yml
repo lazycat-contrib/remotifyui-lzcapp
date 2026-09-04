@@ -1,0 +1,61 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: remotifyui
+
+build:
+  run_buildscript: true
+
+images:
+  - id: remotifyui
+    target: service
+    service: remotifyui
+    source: ghcr.io/ca-x/remotifyui
+    channel: stable
+    sort: semver
+    tag_regex: '^v?\d+\.\d+\.\d+$'
+    delivery:
+      mode: lazycat
+
+stores:
+  official:
+    enabled: true
+    continue_if_newer_version: true
+    skip_if_version_exists: true
+    create_if_missing: true
+    changelog_locales: [zh, en]
+    application:
+      language: zh
+      name: RemotifyUI
+      brief: 自托管 Remotify 多用户控制平面
+      description: 自托管 Remotify 控制平面，支持多用户 OIDC、细粒度 Agent API、可审计操作与内嵌响应式 React 管理界面。
+      keywords: Remotify,远程控制,OIDC,Agent,控制平面
+      source: https://github.com/ca-x/remotifyui
+      source_author: ca-x
+      support_pc: true
+      support_mobile: true
+      screenshot_pc_files:
+        - .github/screenshots/dashboard-desktop.png
+        - .github/screenshots/device-operation-desktop.png
+      screenshot_mobile_files:
+        - .github/screenshots/activity-mobile.png
+        - .github/screenshots/devices-mobile.png
+        - .github/screenshots/enrollment-dialog-mobile.png
+    retry:
+      enabled: false
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: RemotifyUI
+    summary: Stable releases published from GitHub Actions

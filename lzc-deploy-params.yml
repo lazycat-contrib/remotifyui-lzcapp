@@ -1,0 +1,121 @@
+params:
+  - id: bootstrap_email
+    type: string
+    name: Bootstrap email
+    description: Email address for the first owner; ignored after an owner exists
+    default_value: admin@localhost
+    optional: false
+  - id: bootstrap_password
+    type: secret
+    name: Bootstrap password
+    description: Password for the first owner; ignored after an owner exists
+    default_value: $random(len=24)
+    optional: false
+  - id: trusted_proxy_cidrs
+    type: string
+    name: Trusted proxy CIDRs
+    description: Comma-separated proxy CIDRs allowed to supply forwarded client addresses; leave empty unless confirmed
+    default_value: ""
+    optional: true
+  - id: trusted_proxy_header
+    type: string
+    name: Trusted proxy header
+    description: Forwarded address header, either x-forwarded-for or forwarded
+    default_value: x-forwarded-for
+    optional: false
+  - id: oidc_scopes
+    type: string
+    name: OIDC scopes
+    description: Comma-separated OIDC scopes; must include openid
+    default_value: openid,profile,email
+    optional: false
+  - id: disable_local_login
+    type: bool
+    name: Disable local login
+    description: Enable only after an active owner or administrator has linked the LazyCat OIDC identity
+    default_value: "false"
+    optional: false
+  - id: session_hours
+    type: string
+    name: Session lifetime
+    description: Browser session lifetime in hours
+    default_value: "24"
+    optional: false
+  - id: max_request_bytes
+    type: string
+    name: Request size limit
+    description: Maximum HTTP request body size in bytes; must cover base64 transfer expansion
+    default_value: "16777216"
+    optional: false
+  - id: max_output_bytes
+    type: string
+    name: Operation output limit
+    description: Maximum retained stdout and stderr bytes per operation
+    default_value: "2097152"
+    optional: false
+  - id: max_transfer_bytes
+    type: string
+    name: Transfer size limit
+    description: Maximum file transfer size in bytes
+    default_value: "10485760"
+    optional: false
+  - id: operation_retention_days
+    type: string
+    name: Operation retention
+    description: Number of days to retain commands, patches, and output, from 1 to 3650
+    default_value: "90"
+    optional: false
+  - id: audit_retention_days
+    type: string
+    name: Audit retention
+    description: Number of days to retain security audit events, from 1 to 3650
+    default_value: "365"
+    optional: false
+  - id: rust_log
+    type: string
+    name: Log filter
+    description: Rust tracing filter for RemotifyUI and Tower HTTP
+    default_value: remotifyui=info,tower_http=info
+    optional: false
+
+locales:
+  zh:
+    bootstrap_email:
+      name: 初始管理员邮箱
+      description: 首位所有者的邮箱；已有所有者后忽略
+    bootstrap_password:
+      name: 初始管理员密码
+      description: 首位所有者的密码；已有所有者后忽略
+    trusted_proxy_cidrs:
+      name: 可信代理 CIDR
+      description: 可提供转发客户端地址的代理网段，逗号分隔；未确认时请留空
+    trusted_proxy_header:
+      name: 可信代理请求头
+      description: 仅可填写 x-forwarded-for 或 forwarded
+    oidc_scopes:
+      name: OIDC 范围
+      description: 逗号分隔，必须包含 openid
+    disable_local_login:
+      name: 禁用本地登录
+      description: 仅在至少一位所有者或管理员已关联懒猫 OIDC 后启用
+    session_hours:
+      name: 会话时长
+      description: 浏览器会话有效小时数
+    max_request_bytes:
+      name: 请求大小上限
+      description: HTTP 请求体最大字节数，需覆盖 Base64 传输膨胀
+    max_output_bytes:
+      name: 操作输出上限
+      description: 每次操作保留的标准输出与错误输出最大字节数
+    max_transfer_bytes:
+      name: 文件传输上限
+      description: 单次文件传输的最大字节数
+    operation_retention_days:
+      name: 操作保留天数
+      description: 命令、补丁与输出保留 1 至 3650 天
+    audit_retention_days:
+      name: 审计保留天数
+      description: 安全审计事件保留 1 至 3650 天
+    rust_log:
+      name: 日志过滤器
+      description: RemotifyUI 与 Tower HTTP 的 Rust tracing 过滤器

@@ -1,0 +1,45 @@
+application:
+  subdomain: remotifyui
+  oidc_redirect_path: /api/auth/oidc/callback
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://remotifyui:3000/
+  injects:
+    - id: open-save-chooser
+      on: browser
+      when:
+        - /*
+      do:
+        - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
+
+services:
+  remotifyui:
+    # Upstream: ghcr.io/ca-x/remotifyui:0.1.0
+    image: ghcr.io/ca-x/remotifyui:0.1.0
+    binds:
+      - /lzcapp/var/data:/data
+    environment:
+      - REMOTIFYUI_LISTEN=0.0.0.0:3000
+      - REMOTIFYUI_DATABASE_URL=sqlite:///data/remotifyui.db?mode=rwc
+      - REMOTIFYUI_DATA_DIR=/data
+      - REMOTIFYUI_PUBLIC_URL=https://{{ .S.AppDomain }}
+      - {{ printf "REMOTIFYUI_BOOTSTRAP_EMAIL=%s" .U.bootstrap_email | quote }}
+      - {{ printf "REMOTIFYUI_BOOTSTRAP_PASSWORD=%s" .U.bootstrap_password | quote }}
+      - {{ printf "REMOTIFYUI_TRUSTED_PROXY_CIDRS=%s" .U.trusted_proxy_cidrs | quote }}
+      - {{ printf "REMOTIFYUI_TRUSTED_PROXY_HEADER=%s" .U.trusted_proxy_header | quote }}
+      - REMOTIFYUI_OIDC_ISSUER=${LAZYCAT_AUTH_OIDC_ISSUER_URI}
+      - REMOTIFYUI_OIDC_CLIENT_ID=${LAZYCAT_AUTH_OIDC_CLIENT_ID}
+      - REMOTIFYUI_OIDC_CLIENT_SECRET=${LAZYCAT_AUTH_OIDC_CLIENT_SECRET}
+      - {{ printf "REMOTIFYUI_OIDC_SCOPES=%s" .U.oidc_scopes | quote }}
+      - REMOTIFYUI_DISABLE_LOCAL_LOGIN={{ .U.disable_local_login }}
+      - {{ printf "REMOTIFYUI_SESSION_HOURS=%s" .U.session_hours | quote }}
+      - {{ printf "REMOTIFYUI_MAX_REQUEST_BYTES=%s" .U.max_request_bytes | quote }}
+      - {{ printf "REMOTIFYUI_MAX_OUTPUT_BYTES=%s" .U.max_output_bytes | quote }}
+      - {{ printf "REMOTIFYUI_MAX_TRANSFER_BYTES=%s" .U.max_transfer_bytes | quote }}
+      - {{ printf "REMOTIFYUI_OPERATION_RETENTION_DAYS=%s" .U.operation_retention_days | quote }}
+      - {{ printf "REMOTIFYUI_AUDIT_RETENTION_DAYS=%s" .U.audit_retention_days | quote }}
+      - {{ printf "RUST_LOG=%s" .U.rust_log | quote }}
+
+usage: "首次启动会创建设置向导中的所有者账号。请先用本地账号登录并在设置中关联懒猫 OIDC；确认至少一个 owner/admin 已关联后，才能重新配置并关闭本地登录。"

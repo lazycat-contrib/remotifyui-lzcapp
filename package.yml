@@ -1,0 +1,18 @@
+package: community.lazycat.app.remotifyui
+version: 0.1.0
+name: RemotifyUI
+description: "Self-hosted Remotify control plane with multi-user OIDC, scoped Agent APIs, and an embedded React UI"
+author: czyt
+license: GPL-3.0
+homepage: https://github.com/ca-x/remotifyui
+min_os_version: 1.5.0
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: RemotifyUI
+    description: "自托管 Remotify 控制平面，支持多用户 OIDC、细粒度 Agent API 与内嵌 React 界面"
+  en:
+    name: RemotifyUI
+    description: "Self-hosted Remotify control plane with multi-user OIDC, scoped Agent APIs, and an embedded React UI"
