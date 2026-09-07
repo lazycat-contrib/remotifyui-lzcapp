@@ -18,6 +18,7 @@ services:
     # Upstream: ghcr.io/ca-x/remotifyui:0.1.0
     # upstream: ghcr.io/ca-x/remotifyui:v0.1.0
     image: registry.lazycat.cloud/czyt/ca-x/remotifyui:d2adc05ded55a814
+    user: root
     binds:
       - /lzcapp/var/data:/data
     environment:
