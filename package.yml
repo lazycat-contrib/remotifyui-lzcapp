@@ -1,5 +1,5 @@
 package: community.lazycat.app.remotifyui
-version: 0.1.0
+version: 0.1.1
 name: RemotifyUI
 description: "Self-hosted Remotify control plane with multi-user OIDC, scoped Agent APIs, and an embedded React UI"
 author: czyt

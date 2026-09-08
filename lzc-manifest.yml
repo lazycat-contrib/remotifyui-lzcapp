@@ -16,8 +16,8 @@ application:
 services:
   remotifyui:
     # Upstream: ghcr.io/ca-x/remotifyui:0.1.0
-    # upstream: ghcr.io/ca-x/remotifyui:v0.1.0
-    image: registry.lazycat.cloud/czyt/ca-x/remotifyui:d2adc05ded55a814
+    # upstream: ghcr.io/ca-x/remotifyui:v0.1.1
+    image: registry.lazycat.cloud/czyt/ca-x/remotifyui:de00f0d234402b1a
     user: root
     binds:
       - /lzcapp/var/data:/data
