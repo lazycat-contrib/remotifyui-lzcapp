@@ -8,7 +8,11 @@ params:
   - id: bootstrap_password
     type: secret
     name: Bootstrap password
-    description: Password for the first owner; ignored after an owner exists
+    description: >-
+      Required, 12–256 bytes in UTF-8 (12–256 characters when using only ASCII letters,
+      digits, or symbols; Chinese characters usually take 3 bytes each).
+      You can keep the generated 24-character random password; save it for your first login.
+      Used only to create the first owner; ignored after an owner exists.
     default_value: $random(len=24)
     optional: false
   - id: trusted_proxy_cidrs
@@ -85,7 +89,10 @@ locales:
       description: 首位所有者的邮箱；已有所有者后忽略
     bootstrap_password:
       name: 初始管理员密码
-      description: 首位所有者的密码；已有所有者后忽略
+      description: >-
+        必填，长度须为 12–256 字节（UTF-8 编码；仅使用英文字母、数字或半角符号时为 12–256 个字符，中文通常每字占 3 字节）。
+        可保留自动生成的 24 位随机密码，请妥善保存以便首次登录。
+        仅用于创建首位所有者；已有所有者后忽略。
     trusted_proxy_cidrs:
       name: 可信代理 CIDR
       description: 可提供转发客户端地址的代理网段，逗号分隔；未确认时请留空
